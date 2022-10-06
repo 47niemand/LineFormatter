@@ -3,7 +3,10 @@ plugins {
 }
 
 group 'pp.muza.formatter'
-version '0.1'
+version '0.1.1'
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
