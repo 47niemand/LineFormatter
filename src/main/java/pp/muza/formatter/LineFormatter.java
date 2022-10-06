@@ -34,7 +34,7 @@ public class LineFormatter {
         // split the string into words by delimiters
         String[] words = s.split(WORDS_DELIMITER);
         // create a new string builder
-        List<String> resut = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         // create a new line
         StringBuilder line = new StringBuilder();
         // iterate over the words
@@ -44,15 +44,15 @@ public class LineFormatter {
                 line = new StringBuilder(word);
             } else if (1 + word.length() + line.length() >= width) {
                 // if the line is too long, add the line to the string builder and create a new line
-                resut.add(line.toString());
+                result.add(line.toString());
                 line = new StringBuilder(word);
             } else {
                 // if the line is not too long, add the word to the line
                 line.append(space).append(word);
             }
         }
-        resut.add(line.toString());
-        return resut;
+        result.add(line.toString());
+        return result;
     }
 
     /**
@@ -60,6 +60,7 @@ public class LineFormatter {
      *
      * @param s     the text to center and trim
      * @param width the width of the text
+     * @param pad   the padding character
      * @return the centered and trimmed text
      */
     public static String centerTrim(String s, int width, char pad) {
@@ -81,6 +82,7 @@ public class LineFormatter {
      *
      * @param s     the text to pad
      * @param width the width of the text
+     * @param pad   the padding character
      * @return the padded text
      */
     public static String rightPadTrim(String s, int width, char pad) {
@@ -99,6 +101,7 @@ public class LineFormatter {
      *
      * @param s     the text to pad
      * @param width the width of the text
+     * @param pad   the padding character
      * @return the padded text
      */
     public static String leftPadTrim(String s, int width, char pad) {
@@ -117,6 +120,8 @@ public class LineFormatter {
      * @param width  the width of the rectangle
      * @param height the height of the rectangle
      * @param text   the text to fit into the rectangle
+     * @param border the border
+     * @param pad    the padding character
      * @return the rectangle
      */
     public static List<String> textRectangle(int width, int height, String text, Border border, char pad) {
