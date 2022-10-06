@@ -129,7 +129,7 @@ public final class LineFormatter {
      */
     public static List<String> textRectangle(int width, int height, String text, Border border, char pad) {
         int maxTextWidth = width - (border.left ? 1 : 0) - (border.right ? 1 : 0);
-        List<String> lines = textWrap(text, width, pad);
+        List<String> lines = textWrap(text, maxTextWidth, pad);
         List<String> result = new ArrayList<>();
         int textHeight = lines.size();
         int textTop = (height - textHeight) / 2;
