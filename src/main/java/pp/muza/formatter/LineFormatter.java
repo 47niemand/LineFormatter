@@ -148,9 +148,9 @@ public final class LineFormatter {
         StringBuilder sb = new StringBuilder();
         for (int j = 0, i = 0; i < height; i++) {
             if ((i == 0 && border.top)) {
-                result.add(borderHorizontalLine(width, border, maxTextWidth));
+                result.add(horizontalLine(width, border));
             } else if (i == height - 1 && border.bottom) {
-                result.add(borderHorizontalLine(width, border, maxTextWidth));
+                result.add(horizontalLine(width, border));
             } else {
                 if (border.left && width > 0) {
                     sb.append("|");
@@ -235,7 +235,15 @@ public final class LineFormatter {
         return result;
     }
 
-    private static String borderHorizontalLine(int width, Border border, int textWidth) {
+    /**
+     * Creates a horizontal line
+     *
+     * @param width  the length of the line
+     * @param border the border
+     * @return the line
+     */
+    public static String horizontalLine(int width, Border border) {
+        int textWidth = width - (border.left ? 1 : 0) - (border.right ? 1 : 0);
         StringBuilder sb = new StringBuilder();
         if (border.left && width > 0) {
             sb.append("+");
