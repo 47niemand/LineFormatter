@@ -5,6 +5,8 @@ import java.util.List;
 
 /**
  * Text-formatting utility class.
+ *
+ * @author 47niemand
  */
 public final class LineFormatter {
 
@@ -88,7 +90,8 @@ public final class LineFormatter {
     }
 
     /**
-     * Returns a string with the text padded to the specified width. The padding is added to the right.
+     * Returns a string with the text padded to the specified width.
+     * The padding is added to the right.
      * If the text is longer than the specified width, the text is trimmed.
      *
      * @param s     the text to pad
@@ -96,7 +99,7 @@ public final class LineFormatter {
      * @param pad   the padding character
      * @return the padded text
      */
-    public static String rightPadTrim(String s, int width, char pad) {
+    public static String rightAlignTrim(String s, int width, char pad) {
         String result;
         if (s.length() > width) {
             result = s.substring(0, width);
@@ -107,18 +110,19 @@ public final class LineFormatter {
     }
 
     /**
-     * Returns a string with the text padded to the specified width. The padding is added to the left.
-     * If the text is longer than the specified width, the text is trimmed.
+     * Returns a string with the text padded to the specified width.
+     * The padding is added to the left.
+     * If the text is longer than the specified width, the text is trimmed from the left.
      *
      * @param s     the text to pad
      * @param width the width of the text
      * @param pad   the padding character
      * @return the padded text
      */
-    public static String leftPadTrim(String s, int width, char pad) {
+    public static String leftAlignTrim(String s, int width, char pad) {
         String result;
         if (s.length() > width) {
-            result = s.substring(0, width);
+            result = s.substring(s.length() - width);
         } else {
             result = String.valueOf(pad).repeat(width - s.length()) + s;
         }
@@ -249,7 +253,7 @@ public final class LineFormatter {
         for (int i = 0; i < height; i++) {
             int j = i - offset;
             if (j >= 0 && j < lines.size()) {
-                result.add(rightPadTrim(lines.get(j), width, pad));
+                result.add(rightAlignTrim(lines.get(j), width, pad));
             } else {
                 result.add(String.valueOf(pad).repeat(width));
             }
@@ -260,7 +264,7 @@ public final class LineFormatter {
         for (int i = 0; i < height; i++) {
             int j = i - offset;
             if (j >= 0 && j < lines.size()) {
-                result.add(leftPadTrim(lines.get(j), width, pad));
+                result.add(leftAlignTrim(lines.get(j), width, pad));
             } else {
                 result.add(String.valueOf(pad).repeat(width));
             }

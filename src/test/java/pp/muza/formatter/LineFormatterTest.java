@@ -52,12 +52,24 @@ class LineFormatterTest {
     void rightPadTrim() {
         String s = "text";
         String expected = "text  ";
-        Assertions.assertEquals(expected, LineFormatter.rightPadTrim(s, 6, ' '));
+        Assertions.assertEquals(expected, LineFormatter.rightAlignTrim(s, 6, ' '));
 
         s = "text";
         expected = "tex";
-        Assertions.assertEquals(expected, LineFormatter.rightPadTrim(s, 3, ' '));
+        Assertions.assertEquals(expected, LineFormatter.rightAlignTrim(s, 3, ' '));
     }
+
+    @Test
+    void leftPadTrim() {
+        String s = "text";
+        String expected = "  text";
+        Assertions.assertEquals(expected, LineFormatter.leftAlignTrim(s, 6, ' '));
+
+        s = "text";
+        expected = "ext";
+        Assertions.assertEquals(expected, LineFormatter.leftAlignTrim(s, 3, ' '));
+    }
+
 
     @Test
     void printBox() {
