@@ -32,6 +32,7 @@ public final class LineFormatter {
      * @param width the width of the text
      * @param space the padding character
      * @return the wrapped text
+     * @throws IllegalArgumentException if the width is less than or equal to 0.
      */
     public static List<String> textWrap(String text, int width, char space) {
         // split the string into words by delimiters
@@ -51,7 +52,8 @@ public final class LineFormatter {
                     // if the line is empty, add the word
                     line = new StringBuilder(word);
                 } else if (1 + word.length() + line.length() >= width) {
-                    // if the line is too long, add the line to the string builder and create a new line
+                    // if the line is too long, add the line to the string builder and create a new
+                    // line
                     result.add(line.toString());
                     line = new StringBuilder(word);
                 } else {
@@ -71,8 +73,10 @@ public final class LineFormatter {
      * @param width the width of the text
      * @param pad   the padding character
      * @return the centered and trimmed text
+     * @throws IllegalArgumentException if the width is less than 1
      */
     public static String centerTrim(String s, int width, char pad) {
+        checkPositive(width, "width");
         String result;
         if (s.length() >= width) {
             result = s.substring(0, width);
@@ -94,8 +98,10 @@ public final class LineFormatter {
      * @param width the width of the text
      * @param pad   the padding character
      * @return the padded text
+     * @throws IllegalArgumentException if the width is less than 1
      */
     public static String rightAlignTrim(String s, int width, char pad) {
+        checkPositive(width, "width");
         String result;
         if (s.length() > width) {
             result = s.substring(0, width);
@@ -108,14 +114,17 @@ public final class LineFormatter {
     /**
      * Returns a string with the text padded to the specified width.
      * The padding is added to the left.
-     * If the text is longer than the specified width, the text is trimmed from the left.
+     * If the text is longer than the specified width, the text is trimmed from the
+     * left.
      *
      * @param s     the text to pad
      * @param width the width of the text
      * @param pad   the padding character
      * @return the padded text
+     * @throws IllegalArgumentException if the width is less than 1
      */
     public static String leftAlignTrim(String s, int width, char pad) {
+        checkPositive(width, "width");
         String result;
         if (s.length() > width) {
             result = s.substring(s.length() - width);
@@ -126,7 +135,8 @@ public final class LineFormatter {
     }
 
     /**
-     * Creates a rectangle with the specified dimensions, into which the text is fitted.
+     * Creates a rectangle with the specified dimensions, into which the text is
+     * fitted.
      *
      * @param width  the width of the rectangle
      * @param height the height of the rectangle
@@ -134,8 +144,11 @@ public final class LineFormatter {
      * @param border the border
      * @param pad    the padding character
      * @return the rectangle
+     * @throws IllegalArgumentException if the width or height is less than 1
      */
     public static List<String> textRectangle(int width, int height, String text, Border border, char pad) {
+        checkPositive(width, "width");
+        checkPositive(height, "height");
         int maxTextWidth = width - (border.left ? 1 : 0) - (border.right ? 1 : 0);
         List<String> lines = textWrap(text, maxTextWidth, pad);
         List<String> result = new ArrayList<>();
@@ -170,7 +183,8 @@ public final class LineFormatter {
     }
 
     /**
-     * Creates a list of strings with the specified dimensions, into which the text is fitted.
+     * Creates a list of strings with the specified dimensions, into which the text
+     * is fitted.
      *
      * @param lines  the list of strings
      * @param width  the width of the rectangle
@@ -178,8 +192,11 @@ public final class LineFormatter {
      * @param align  the alignment of the text
      * @param pad    the padding character
      * @return the list of strings
+     * @throws IllegalArgumentException if the width or height is less than 1
      */
     public static List<String> resize(List<String> lines, int width, int height, Align align, char pad) {
+        checkPositive(width, "width");
+        checkPositive(height, "height");
         List<String> result = new ArrayList<>();
         switch (align) {
             case LEFT_BOTTOM:
@@ -237,8 +254,10 @@ public final class LineFormatter {
      * @param width  the length of the line
      * @param border the border
      * @return the line
+     * @throws IllegalArgumentException if the width is less than 1
      */
     public static String horizontalLine(int width, Border border) {
+        checkPositive(width, "width");
         int textWidth = width - (border.left ? 1 : 0) - (border.right ? 1 : 0);
         StringBuilder sb = new StringBuilder();
         if (border.left && width > 0) {
@@ -275,6 +294,11 @@ public final class LineFormatter {
         }
     }
 
+    private static void checkPositive(int value, String argument) {
+        if (value < 0) {
+            throw new IllegalArgumentException(argument + " must be positive");
+        }
+    }
 
     /**
      * Border location.

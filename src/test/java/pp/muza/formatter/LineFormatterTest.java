@@ -1,10 +1,10 @@
 package pp.muza.formatter;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 class LineFormatterTest {
 
@@ -70,7 +70,6 @@ class LineFormatterTest {
         Assertions.assertEquals(expected, LineFormatter.leftAlignTrim(s, 3, ' '));
     }
 
-
     @Test
     void printBox() {
         String s = "tex1 tex2";
@@ -119,27 +118,33 @@ class LineFormatterTest {
 
         s = "tex1 tex2";
         expected = List.of("------\n tex1 \n tex2 \n------\n".split("\n"));
-        Assertions.assertLinesMatch(expected, (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.HORIZONTAL, ' ')));
+        Assertions.assertLinesMatch(expected,
+                (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.HORIZONTAL, ' ')));
 
         s = "tex1 tex2";
         expected = List.of("|    |\n|tex1|\n|tex2|\n|    |\n".split("\n"));
-        Assertions.assertLinesMatch(expected, (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.VERTICAL, ' ')));
+        Assertions.assertLinesMatch(expected,
+                (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.VERTICAL, ' ')));
 
         s = "tex1 tex2";
         expected = List.of("|tex1|\n|tex2|\n|    |\n".split("\n"));
-        Assertions.assertLinesMatch(expected, (LineFormatter.textRectangle(6, 3, s, LineFormatter.Border.VERTICAL, ' ')));
+        Assertions.assertLinesMatch(expected,
+                (LineFormatter.textRectangle(6, 3, s, LineFormatter.Border.VERTICAL, ' ')));
 
         s = "tex1 tex2";
         expected = List.of("------\n tex1 \n tex2 \n------\n".split("\n"));
-        Assertions.assertLinesMatch(expected, (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.HORIZONTAL, ' ')));
+        Assertions.assertLinesMatch(expected,
+                (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.HORIZONTAL, ' ')));
 
         s = "tex1 tex2";
         expected = List.of("+-----\n|tex1 \n|tex2 \n|     \n".split("\n"));
-        Assertions.assertLinesMatch(expected, (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.TOP_LEFT, ' ')));
+        Assertions.assertLinesMatch(expected,
+                (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.TOP_LEFT, ' ')));
 
         s = "tex1 tex2";
         expected = List.of("-----+\ntex1 |\ntex2 |\n     |\n".split("\n"));
-        Assertions.assertLinesMatch(expected, (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.TOP_RIGHT, ' ')));
+        Assertions.assertLinesMatch(expected,
+                (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.TOP_RIGHT, ' ')));
 
         s = "tex1 tex2";
         expected = List.of("------\n tex1 \n tex2 \n      \n".split("\n"));
@@ -147,11 +152,13 @@ class LineFormatterTest {
 
         s = "tex1 tex2";
         expected = List.of("     |\ntex1 |\ntex2 |\n-----+\n".split("\n"));
-        Assertions.assertLinesMatch(expected, (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.BOTTOM_RIGHT, ' ')));
+        Assertions.assertLinesMatch(expected,
+                (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.BOTTOM_RIGHT, ' ')));
 
         s = "tex1 tex2";
         expected = List.of("|     \n|tex1 \n|tex2 \n+-----\n".split("\n"));
-        Assertions.assertLinesMatch(expected, (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.BOTTOM_LEFT, ' ')));
+        Assertions.assertLinesMatch(expected,
+                (LineFormatter.textRectangle(6, 4, s, LineFormatter.Border.BOTTOM_LEFT, ' ')));
 
         s = "tex1 tex2";
         expected = List.of("      \n tex1 \n tex2 \n------\n".split("\n"));
@@ -173,14 +180,14 @@ class LineFormatterTest {
     @Test
     void fitLeft() {
         {
-            List<String> s = List.of(new String[]{"text1", "text2"});
+            List<String> s = List.of(new String[] { "text1", "text2" });
             List<String> expected = List.of("text1.\ntext2.\n......\n......\n".split("\n"));
             List<String> sb = new ArrayList<>();
             LineFormatter.resizeLeft(6, 4, s, sb, 0, '.');
             Assertions.assertLinesMatch(expected, (sb));
         }
         {
-            List<String> s = List.of(new String[]{"text1", "text2"});
+            List<String> s = List.of(new String[] { "text1", "text2" });
             List<String> expected = List.of("......\n......\ntext1.\ntext2.\n".split("\n"));
             List<String> sb = new ArrayList<>();
             LineFormatter.resizeLeft(6, 4, s, sb, 2, '.');
@@ -191,14 +198,14 @@ class LineFormatterTest {
     @Test
     void fitRight() {
         {
-            List<String> s = List.of(new String[]{"text1", "text2"});
+            List<String> s = List.of(new String[] { "text1", "text2" });
             List<String> expected = List.of(".text1\n.text2\n......\n......\n".split("\n"));
             List<String> sb = new ArrayList<>();
             LineFormatter.resizeRight(6, 4, s, sb, 0, '.');
             Assertions.assertLinesMatch(expected, (sb));
         }
         {
-            List<String> s = List.of(new String[]{"text1", "text2"});
+            List<String> s = List.of(new String[] { "text1", "text2" });
             List<String> expected = List.of("......\n......\n.text1\n.text2\n".split("\n"));
             List<String> sb = new ArrayList<>();
             LineFormatter.resizeRight(6, 4, s, sb, 2, '.');

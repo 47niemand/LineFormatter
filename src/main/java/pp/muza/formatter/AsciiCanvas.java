@@ -127,12 +127,16 @@ public class AsciiCanvas {
      * @throws IndexOutOfBoundsException if the position is out of bounds.
      */
     public char get(int left, int top) {
-        if (left < 0 || left >= width || top < 0 || top >= height) {
-            throw new IndexOutOfBoundsException("Out of bounds");
-        }
+        checkRange(left, 0, width, "left");
+        checkRange(top, 0, height, "top");
         return canvas[top][left];
     }
 
+    private void checkRange(int value, int min, int max, String argument) {
+        if (value < min || value >= max) {
+            throw new IndexOutOfBoundsException(argument + " is out of bounds");
+        }
+    }
 
     @Override
     public String toString() {

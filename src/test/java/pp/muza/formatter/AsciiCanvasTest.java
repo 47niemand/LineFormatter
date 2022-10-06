@@ -1,11 +1,11 @@
 package pp.muza.formatter;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 class AsciiCanvasTest {
 
@@ -19,7 +19,6 @@ class AsciiCanvasTest {
             }
         }
     }
-
 
     @Test
     void drawText() {
@@ -35,7 +34,7 @@ class AsciiCanvasTest {
     @Test
     void pasteLines() {
         AsciiCanvas canvas = new AsciiCanvas(10, 10);
-        canvas.pasteLines(0, 0, List.of(new String[]{"Hello", "World"}));
+        canvas.pasteLines(0, 0, List.of(new String[] { "Hello", "World" }));
         assertEquals('H', canvas.get(0, 0));
         assertEquals('e', canvas.get(1, 0));
         assertEquals('l', canvas.get(2, 0));
@@ -51,7 +50,7 @@ class AsciiCanvasTest {
     @Test
     void getLines() {
         AsciiCanvas canvas = new AsciiCanvas(10, 10);
-        canvas.pasteLines(0, 0, List.of(new String[]{"Hello", "World"}));
+        canvas.pasteLines(0, 0, List.of(new String[] { "Hello", "World" }));
         List<String> lines = canvas.getLines();
         assertTrue(lines.get(0).startsWith("Hello"));
         assertTrue(lines.get(1).startsWith("World"));
@@ -60,7 +59,7 @@ class AsciiCanvasTest {
     @Test
     void getCanvas() {
         AsciiCanvas canvas = new AsciiCanvas(10, 10);
-        canvas.pasteLines(0, 0, List.of(new String[]{"Hello", "World"}));
+        canvas.pasteLines(0, 0, List.of(new String[] { "Hello", "World" }));
         char[][] c = canvas.getCanvas();
         assertEquals('H', c[0][0]);
         assertEquals('e', c[0][1]);
@@ -89,7 +88,7 @@ class AsciiCanvasTest {
     @Test
     void testToString() {
         AsciiCanvas canvas = new AsciiCanvas(5, 2);
-        canvas.pasteLines(0, 0, List.of(new String[]{"Hello", "World"}));
+        canvas.pasteLines(0, 0, List.of(new String[] { "Hello", "World" }));
         String s = canvas.toString();
         String expected = "Hello" + Meta.LINES_SEPARATOR + "World" + Meta.LINES_SEPARATOR;
         assertEquals(expected, s);
