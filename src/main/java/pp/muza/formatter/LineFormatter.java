@@ -6,10 +6,13 @@ import java.util.List;
 /**
  * Text-formatting utility class.
  */
-public class LineFormatter {
+public final class LineFormatter {
 
     public static final String LINES_SEPARATOR = System.getProperty("line.separator");
     public static final String WORDS_DELIMITER = "\\s+";
+
+    private LineFormatter() {
+    }
 
     /**
      * Converts the list of strings to a single string with line separators.
