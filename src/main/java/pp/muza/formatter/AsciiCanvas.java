@@ -49,7 +49,7 @@ public class AsciiCanvas {
      * @param text the text to draw.
      */
     public void drawText(int left, int top, String text) {
-        if (top < 0 || top >= height || text == null || text.isEmpty()) {
+        if (top < 0 || top >= height || left < 0 || left >= width || text == null || text.isEmpty()) {
             return;
         }
         int i = 0;
