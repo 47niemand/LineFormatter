@@ -12,7 +12,28 @@ class LineFormatterTest {
     void textWrap() {
         String s = "tex1 tex2 tex3";
         List<String> expected = List.of("tex1\ntex2\ntex3".split("\n"));
-        List<String> result = LineFormatter.textWrap(s, 4, ' ');
+        List<String> result = LineFormatter.textWrap(s, 5, ' ');
+        Assertions.assertLinesMatch(expected, result);
+
+        s = "tex1 tex2 tex3\ntex4";
+        expected = List.of("tex1 tex2\ntex3\ntex4".split("\n"));
+        result = LineFormatter.textWrap(s, 10, ' ');
+        System.out.println(result);
+        Assertions.assertLinesMatch(expected, result);
+
+        s = "\n\n";
+        expected = List.of("\n\n".split("\n"));
+        result = LineFormatter.textWrap(s, 10, ' ');
+        Assertions.assertLinesMatch(expected, result);
+
+        s = "\ntext";
+        expected = List.of("\ntext".split("\n"));
+        result = LineFormatter.textWrap(s, 10, ' ');
+        Assertions.assertLinesMatch(expected, result);
+
+        s = "\ntext\n\n";
+        expected = List.of("\ntext".split("\n"));
+        result = LineFormatter.textWrap(s, 10, ' ');
         Assertions.assertLinesMatch(expected, result);
     }
 
@@ -211,7 +232,7 @@ class LineFormatterTest {
     @Test
     void linesToString() {
         List<String> s = List.of("text1\ntext2\n".split("\n"));
-        String expected = "text1"+LineFormatter.LINES_SEPARATOR+"text2";
+        String expected = "text1" + LineFormatter.LINES_SEPARATOR + "text2";
         Assertions.assertEquals(expected, (LineFormatter.linesToString(s)));
     }
 }

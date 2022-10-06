@@ -9,7 +9,8 @@ import java.util.List;
 public final class LineFormatter {
 
     public static final String LINES_SEPARATOR = System.getProperty("line.separator");
-    public static final String WORDS_DELIMITER = "\\s+";
+    public static final String LINE_DELIMITER_REGEX = "\\r?\\n";
+    public static final String WORDS_DELIMITER = "[ \\t\\x0B\\r]+";
 
     private LineFormatter() {
     }
@@ -25,36 +26,43 @@ public final class LineFormatter {
     }
 
     /**
-     * Returns a string with the text wrapped to the specified line width.
-     * if a word exceeds line width, it doesn't wrap.
+     * Returns a lines with the text wrapped to the specified line width.
+     * if a single word exceeds line width, it doesn't wrap.
+     * if a text contains line separators, it starts a new line.
      *
-     * @param s     the text to wrap
+     * @param text  the text to wrap
      * @param width the width of the text
      * @param space the padding character
      * @return the wrapped text
      */
-    public static List<String> textWrap(String s, int width, char space) {
+    public static List<String> textWrap(String text, int width, char space) {
         // split the string into words by delimiters
-        String[] words = s.split(WORDS_DELIMITER);
-        // create a new string builder
+        String[] sourceLines = text.split(LINE_DELIMITER_REGEX);
         List<String> result = new ArrayList<>();
-        // create a new line
-        StringBuilder line = new StringBuilder();
-        // iterate over the words
-        for (String word : words) {
-            if (line.length() == 0) {
-                // if the line is empty, add the word
-                line = new StringBuilder(word);
-            } else if (1 + word.length() + line.length() >= width) {
-                // if the line is too long, add the line to the string builder and create a new line
-                result.add(line.toString());
-                line = new StringBuilder(word);
-            } else {
-                // if the line is not too long, add the word to the line
-                line.append(space).append(word);
+
+        for (String s1 : sourceLines) {
+            String t = s1.trim();
+            String[] words = t.split(WORDS_DELIMITER);
+            // create a new string builder
+
+            // create a new line
+            StringBuilder line = new StringBuilder();
+            // iterate over the words
+            for (String word : words) {
+                if (line.length() == 0) {
+                    // if the line is empty, add the word
+                    line = new StringBuilder(word);
+                } else if (1 + word.length() + line.length() >= width) {
+                    // if the line is too long, add the line to the string builder and create a new line
+                    result.add(line.toString());
+                    line = new StringBuilder(word);
+                } else {
+                    // if the line is not too long, add the word to the line
+                    line.append(space).append(word);
+                }
             }
+            result.add(line.toString());
         }
-        result.add(line.toString());
         return result;
     }
 
