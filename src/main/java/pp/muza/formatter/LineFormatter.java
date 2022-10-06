@@ -8,7 +8,8 @@ import java.util.List;
  */
 public class LineFormatter {
 
-    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+    public static final String LINES_SEPARATOR = System.getProperty("line.separator");
+    public static final String WORDS_DELIMITER = "\\s+";
 
     /**
      * Converts the list of strings to a single string with line separators.
@@ -17,7 +18,7 @@ public class LineFormatter {
      * @return string with line separators
      */
     public static String linesToString(List<String> lines) {
-        return String.join(LINE_SEPARATOR, lines);
+        return String.join(LINES_SEPARATOR, lines);
     }
 
     /**
@@ -31,7 +32,7 @@ public class LineFormatter {
      */
     public static List<String> textWrap(String s, int width, char space) {
         // split the string into words by delimiters
-        String[] words = s.split("\\s+");
+        String[] words = s.split(WORDS_DELIMITER);
         // create a new string builder
         List<String> resut = new ArrayList<>();
         // create a new line
@@ -183,19 +184,34 @@ public class LineFormatter {
         return result;
     }
 
-    public static List<String> joinHorizontal(List<String> lines1, List<String> lines2) {
-        int maxLines = Math.max(lines1.size(), lines2.size());
+    /**
+     * Joins lines into a single line.
+     *
+     * @param left  left lines
+     * @param right right lines
+     * @return the joined lines
+     */
+    public static List<String> joinHorizontal(List<String> left, List<String> right) {
+        int maxLines = Math.max(left.size(), right.size());
         List<String> result = new ArrayList<>();
+        // join the lines
         for (int i = 0; i < maxLines; i++) {
-            result.add((i < lines1.size() ? lines1.get(i) : "") + (i < lines2.size() ? lines2.get(i) : ""));
+            result.add((i < left.size() ? left.get(i) : "") + (i < right.size() ? right.get(i) : ""));
         }
         return result;
     }
 
-    public static List<String> joinVertical(List<String> lines1, List<String> lines2) {
+    /**
+     * Joins two blocks of lines vertically.
+     *
+     * @param top    the top lines
+     * @param bottom the bottom lines
+     * @return the joined lines
+     */
+    public static List<String> joinVertical(List<String> top, List<String> bottom) {
         List<String> result = new ArrayList<>();
-        result.addAll(lines1);
-        result.addAll(lines2);
+        result.addAll(top);
+        result.addAll(bottom);
         return result;
     }
 
@@ -240,17 +256,53 @@ public class LineFormatter {
      * Border location.
      */
     public enum Border {
+        /**
+         * All border.
+         */
         ALL(true, true, true, true),
+        /**
+         * Bottom border.
+         */
         BOTTOM(false, false, false, true),
+        /**
+         * Bottom left border.
+         */
         BOTTOM_LEFT(true, false, false, true),
+        /**
+         * Bottom right border.
+         */
         BOTTOM_RIGHT(false, true, false, true),
+        /**
+         * Horizontal border.
+         */
         HORIZONTAL(false, false, true, true),
+        /**
+         * left border.
+         */
         LEFT(true, false, false, false),
+        /**
+         * No border.
+         */
         NONE(false, false, false, false),
+        /**
+         * Right border.
+         */
         RIGHT(false, true, false, false),
+        /**
+         * Top border.
+         */
         TOP(false, false, true, false),
+        /**
+         * Top-left border.
+         */
         TOP_LEFT(true, false, true, false),
+        /**
+         * Top right border.
+         */
         TOP_RIGHT(false, true, true, false),
+        /**
+         * Vertical border.
+         */
         VERTICAL(true, true, false, false);
 
         public final boolean left;
@@ -267,9 +319,24 @@ public class LineFormatter {
     }
 
     /**
-     * Crop align.
+     * Resize align.
      */
     public enum Align {
-        LEFT_BOTTOM, LEFT_TOP, RIGHT_BOTTOM, RIGHT_TOP
+        /**
+         * Align to a left bottom corner.
+         */
+        LEFT_BOTTOM,
+        /**
+         * Align to a left top corner.
+         */
+        LEFT_TOP,
+        /**
+         * Align to a right bottom corner.
+         */
+        RIGHT_BOTTOM,
+        /**
+         * Align to a right top corner.
+         */
+        RIGHT_TOP
     }
 }
