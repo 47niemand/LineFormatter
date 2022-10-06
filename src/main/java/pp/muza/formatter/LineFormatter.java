@@ -10,10 +10,6 @@ import java.util.List;
  */
 public final class LineFormatter {
 
-    public static final String LINES_SEPARATOR = System.getProperty("line.separator");
-    public static final String LINE_DELIMITER_REGEX = "\\r?\\n";
-    public static final String WORDS_DELIMITER = "[ \\t\\x0B\\r]+";
-
     private LineFormatter() {
     }
 
@@ -24,7 +20,7 @@ public final class LineFormatter {
      * @return string with line separators
      */
     public static String linesToString(List<String> lines) {
-        return String.join(LINES_SEPARATOR, lines);
+        return String.join(Meta.LINES_SEPARATOR, lines);
     }
 
     /**
@@ -39,12 +35,12 @@ public final class LineFormatter {
      */
     public static List<String> textWrap(String text, int width, char space) {
         // split the string into words by delimiters
-        String[] sourceLines = text.split(LINE_DELIMITER_REGEX);
+        String[] sourceLines = text.split(Meta.LINE_DELIMITER_REGEX);
         List<String> result = new ArrayList<>();
 
         for (String s1 : sourceLines) {
             String t = s1.trim();
-            String[] words = t.split(WORDS_DELIMITER);
+            String[] words = t.split(Meta.WORDS_DELIMITER);
             // create a new string builder
 
             // create a new line

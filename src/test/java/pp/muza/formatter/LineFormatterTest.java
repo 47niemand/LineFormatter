@@ -244,7 +244,7 @@ class LineFormatterTest {
     @Test
     void linesToString() {
         List<String> s = List.of("text1\ntext2\n".split("\n"));
-        String expected = "text1" + LineFormatter.LINES_SEPARATOR + "text2";
+        String expected = "text1" + Meta.LINES_SEPARATOR + "text2";
         Assertions.assertEquals(expected, (LineFormatter.linesToString(s)));
     }
 }
