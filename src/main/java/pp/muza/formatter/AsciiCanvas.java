@@ -14,6 +14,12 @@ public class AsciiCanvas {
     private final int height;
     private final char[][] canvas;
 
+    /**
+     * Creates a new AsciiCanvas with the specified width and height.
+     *
+     * @param width  the width of the canvas.
+     * @param height the height of the canvas.
+     */
     public AsciiCanvas(int width, int height) {
         this.width = width;
         this.height = height;
@@ -59,6 +65,24 @@ public class AsciiCanvas {
             }
             canvas[top][left + i] = c;
             i++;
+        }
+    }
+
+    /**
+     * Draws a text at the specified position with the specified alignment.
+     *
+     * @param left  the left position of the text.
+     * @param top   the top position of the text.
+     * @param text  the text to draw.
+     * @param align the alignment of the text.
+     */
+    public void drawText(int left, int top, String text, Align align) {
+        if (align == Align.LEFT) {
+            drawText(left, top, text);
+        } else if (align == Align.RIGHT) {
+            drawText(left - text.length() + 1, top, text);
+        } else {
+            throw new IllegalArgumentException("Unknown alignment: " + align);
         }
     }
 
@@ -127,13 +151,13 @@ public class AsciiCanvas {
      * @throws IndexOutOfBoundsException if the position is out of bounds.
      */
     public char get(int left, int top) {
-        checkRange(left, 0, width, "left");
-        checkRange(top, 0, height, "top");
+        checkRange(left, width, "left");
+        checkRange(top, height, "top");
         return canvas[top][left];
     }
 
-    private void checkRange(int value, int min, int max, String argument) {
-        if (value < min || value >= max) {
+    private void checkRange(int value, int max, String argument) {
+        if (value < 0 || value >= max) {
             throw new IndexOutOfBoundsException(argument + " is out of bounds");
         }
     }
@@ -148,5 +172,9 @@ public class AsciiCanvas {
             sb.append(Meta.LINES_SEPARATOR);
         }
         return sb.toString();
+    }
+
+    public enum Align {
+        LEFT, RIGHT
     }
 }
