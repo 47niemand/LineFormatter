@@ -10,6 +10,19 @@ import java.util.List;
  */
 public final class LineFormatter {
 
+    /**
+     * The cross character.
+     */
+    public static final String STR_CROSS = "+";
+    /**
+     * The horizontal line character.
+     */
+    public static final String STR_HORIZONTAL = "-";
+    /**
+     * The vertical line character.
+     */
+    public static final String STR_VERTICAL = "|";
+
     private LineFormatter() {
     }
 
@@ -25,8 +38,8 @@ public final class LineFormatter {
 
     /**
      * Returns a lines with the text wrapped to the specified line width.
-     * if a single word exceeds line width, it doesn't wrap.
-     * if a text contains line separators, it starts a new line.
+     * If a single word exceeds line width, it doesn't wrap.
+     * If a text contains line separators, it starts a new line.
      *
      * @param text  the text to wrap
      * @param width the width of the text
@@ -48,7 +61,7 @@ public final class LineFormatter {
             StringBuilder line = new StringBuilder();
             // iterate over the words
             for (String word : words) {
-                if (line.length() == 0) {
+                if (line.isEmpty()) {
                     // if the line is empty, add the word
                     line = new StringBuilder(word);
                 } else if (1 + word.length() + line.length() >= width) {
@@ -162,7 +175,7 @@ public final class LineFormatter {
                 result.add(horizontalLine(width, border));
             } else {
                 if (border.left && width > 0) {
-                    sb.append("|");
+                    sb.append(STR_VERTICAL);
                 }
                 if (maxTextWidth > 0) {
                     if (i >= textTop && j < lines.size()) {
@@ -173,7 +186,7 @@ public final class LineFormatter {
                     }
                 }
                 if (border.right && width > 1) {
-                    sb.append("|");
+                    sb.append(STR_VERTICAL);
                 }
                 result.add(sb.toString());
                 sb = new StringBuilder();
@@ -261,13 +274,13 @@ public final class LineFormatter {
         int textWidth = width - (border.left ? 1 : 0) - (border.right ? 1 : 0);
         StringBuilder sb = new StringBuilder();
         if (border.left && width > 0) {
-            sb.append("+");
+            sb.append(STR_CROSS);
         }
         if (textWidth > 0) {
-            sb.append("-".repeat(textWidth));
+            sb.append(STR_HORIZONTAL.repeat(textWidth));
         }
         if (border.right && width > 1) {
-            sb.append("+");
+            sb.append(STR_CROSS);
         }
         return sb.toString();
     }
@@ -351,11 +364,36 @@ public final class LineFormatter {
         /**
          * Vertical border.
          */
-        VERTICAL(true, true, false, false);
+        VERTICAL(true, true, false, false),
+        /**
+         * Left top bottom border.
+         */
+        LEFT_TOP_BOTTOM(true, false, true, true),
+        /**
+         * Left right top border.
+         */
+        LEFT_RIGHT_TOP(true, true, true, false),
+        /**
+         * Right top bottom border.
+         */
+        RIGHT_TOP_BOTTOM(false, true, true, true),
+        ;
 
+        /**
+         * Left border.
+         */
         public final boolean left;
+        /**
+         * Right border.
+         */
         public final boolean right;
+        /**
+         * Top border.
+         */
         public final boolean top;
+        /**
+         * Bottom border.
+         */
         public final boolean bottom;
 
         Border(boolean left, boolean right, boolean top, boolean bottom) {
@@ -371,15 +409,15 @@ public final class LineFormatter {
      */
     public enum Align {
         /**
-         * Align to a left bottom corner.
+         * Align to the left bottom corner.
          */
         LEFT_BOTTOM,
         /**
-         * Align to a left top corner.
+         * Align to the left top corner.
          */
         LEFT_TOP,
         /**
-         * Align to a right bottom corner.
+         * Align to the right bottom corner.
          */
         RIGHT_BOTTOM,
         /**

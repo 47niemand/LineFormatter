@@ -100,7 +100,8 @@ public class AsciiCanvas {
     /**
      * Scrolls the canvas vertically.
      *
-     * @param n the number of lines to scroll. Positive values scroll down, negative values scroll up.
+     * @param n the number of lines to scroll. Positive values scroll down, negative
+     *          values scroll up.
      */
     public void scrollVertically(int n) {
         if (n == 0) {
