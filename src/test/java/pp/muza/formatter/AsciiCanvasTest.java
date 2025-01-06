@@ -32,6 +32,23 @@ class AsciiCanvasTest {
     }
 
     @Test
+    void drawTextAligned() {
+        AsciiCanvas canvas = new AsciiCanvas(10, 10);
+        canvas.drawText(0, 0, "Hello", AsciiCanvas.Align.LEFT);
+        assertEquals('H', canvas.get(0, 0));
+        assertEquals('e', canvas.get(1, 0));
+        assertEquals('l', canvas.get(2, 0));
+        assertEquals('l', canvas.get(3, 0));
+        assertEquals('o', canvas.get(4, 0));
+        canvas.drawText(9, 1, "Hello", AsciiCanvas.Align.RIGHT);
+        assertEquals('H', canvas.get(5, 1));
+        assertEquals('e', canvas.get(6, 1));
+        assertEquals('l', canvas.get(7, 1));
+        assertEquals('l', canvas.get(8, 1));
+        assertEquals('o', canvas.get(9, 1));
+    }
+
+    @Test
     void pasteLines() {
         AsciiCanvas canvas = new AsciiCanvas(10, 10);
         canvas.pasteLines(0, 0, List.of(new String[] { "Hello", "World" }));
